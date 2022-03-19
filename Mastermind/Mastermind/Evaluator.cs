@@ -12,20 +12,6 @@ public class Evaluator
         var guessAndSecretSansStrongElements =
             RemoveStrongElements(guessAndSecret);
 
-/*         var secretSansStrongElements =
-            guessAndSecret
-                .Secret
-                    .Where(
-                        (s, i) => s != guessAndSecret.Guess[i])
-                    .ToList();
-
-        var guessSansStrongElements =
-            guessAndSecret
-                .Guess
-                    .Where(
-                        (g, i) => g != guessAndSecret.Secret[i])
-                    .ToList(); */
-
         var strongCount =
             guessAndSecret.Guess.Count - guessAndSecretSansStrongElements.Guess.Count;
 
