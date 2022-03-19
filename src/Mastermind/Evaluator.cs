@@ -9,68 +9,68 @@ public class Evaluator
     public GuessEvaluation Evaluate(GuessAndSecret guessAndSecret)
     {
 
-        var guessAndSecretSansStrongElements =
-            RemoveStrongElements(
+        var guessAndSecretSansBulls =
+            RemoveBulls(
                 guessAndSecret);
 
         var bullCount =
-            CalculateStrongCount(
+            GetBullCount(
                 guessAndSecret.Guess,
-                guessAndSecretSansStrongElements.Guess);
+                guessAndSecretSansBulls.Guess);
 
         var cowCount =
-            CalculateWeakCount(
-                guessAndSecretSansStrongElements);
+            GetCowCount(
+                guessAndSecretSansBulls);
 
         return new GuessEvaluation(bullCount, cowCount);
     }
 
-    private int CalculateStrongCount(
-        List<int> guess, List<int> guessSansStrongElements)
+    private int GetBullCount(
+        List<int> guess, List<int> guessSansBulls)
     {
-        return guess.Count - guessSansStrongElements.Count;
+        return guess.Count - guessSansBulls.Count;
     }
 
-    private int CalculateWeakCount(
-        GuessAndSecret guessAndSecretSansStrongElements)
+    private int GetCowCount(
+        GuessAndSecret guessAndSecretSansBulls)
     {
-        return guessAndSecretSansStrongElements.Guess
+        return guessAndSecretSansBulls.Guess
             .Intersect(
-                guessAndSecretSansStrongElements.Secret)
+                guessAndSecretSansBulls.Secret)
             .Select(
-                distinctWeakElement =>
-                    GetWeakElementMinimumFrequency(
-                        distinctWeakElement,
-                        guessAndSecretSansStrongElements))
+                distinctCows =>
+                    GetCowMinimumFrequency(
+                        distinctCows,
+                        guessAndSecretSansBulls))
             .Sum();
     }
 
-    private int GetWeakElementMinimumFrequency(
-        int distinctWeakElement, GuessAndSecret guessAndSecretSansStrongElements)
+    private int GetCowMinimumFrequency(
+        int distinctCow, GuessAndSecret guessAndSecretSansBulls)
     {
         return Math.Min(
             ElementFrequency(
-                distinctWeakElement,
-                guessAndSecretSansStrongElements.Guess),
+                distinctCow,
+                guessAndSecretSansBulls.Guess),
             ElementFrequency(
-                distinctWeakElement,
-                guessAndSecretSansStrongElements.Secret));
+                distinctCow,
+                guessAndSecretSansBulls.Secret));
     }
 
-    private GuessAndSecret RemoveStrongElements(GuessAndSecret guessAndSecret)
+    private GuessAndSecret RemoveBulls(GuessAndSecret guessAndSecret)
     {
         var enrichedGuessAndSecret = Enrich(guessAndSecret);
 
         return new GuessAndSecret(
-                RemoveStrongElements(
+                RemoveBulls(
                     enrichedGuessAndSecret.Guess,
                     enrichedGuessAndSecret.Secret),
-                RemoveStrongElements(
+                RemoveBulls(
                     enrichedGuessAndSecret.Secret,
                     enrichedGuessAndSecret.Guess));
     }
 
-    private List<int> RemoveStrongElements(
+    private List<int> RemoveBulls(
         Dictionary<int, int> left, Dictionary<int, int> right)
     {
         return left
