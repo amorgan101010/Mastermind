@@ -3,22 +3,15 @@ using Xunit;
 
 namespace Mastermind.Tests;
 
-// For some reason, right now these tests don't work
-// when run with VS Code's "Run [All] Tests" buttons.
-// They work via `dotnet test` and Visual Studio's Test Explorer, though.
+// Any commented out InlineData indicates the method either doesn't exist
+// or the test scenario fails for that implementation.
 
 public class EvaluatorUnitTests
 {
     public List<int> _defaultSecret = new List<int>() { 22, 6, 8, 3, 3 };
 
-    // TODO: Fill out the tests
-    [Theory]
-    [InlineData("NaiveImplementation")]
-    //[InlineData("BetterImplementation")]
-    //[InlineData("CoolImplementation")]
-    //[InlineData("EdgyImplementation")]
-    //[InlineData("RobustImplementation")]
-    public void HandlesGuess_WithTotallyWrongElements(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithTotallyWrongElements()
     {
         var guess = new List<int>() { 21, 5, 7, 2, 1 };
         var secret = _defaultSecret;
@@ -26,91 +19,122 @@ public class EvaluatorUnitTests
 
         var sut = new Evaluator();
 
-        // I would not normally do this reflection stuff, because
-        // I wouldn't normally have multiple functionally identical implementations.
-        // Well, they're _intended_ to be identical, but some don't cover edge cases.
         var actual =
-            typeof(Evaluator)
-                .GetMethod(implementationMethodName)
-                .Invoke(sut, new [] { guess, secret });
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
 
         Assert.Equal(expected, actual);
     }
 
-    [Theory]
-    [InlineData("NiaveImplementation")]
-    [InlineData("BetterImplementation")]
-    [InlineData("CoolImplementation")]
-    [InlineData("EdgyImplementation")]
-    [InlineData("RobustImplementation")]
-    public void HandlesGuess_WithSingleStrongGuessElement(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithSingleStrongGuessElement()
     {
-        Assert.Empty("TODO: Implement");
+        var guess = new List<int>() { 22, 5, 7, 2, 1 };
+        var secret = _defaultSecret;
+        var expected = "1 strong, 0 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
     }
 
-    [Theory]
-    [InlineData("NiaveImplementation")]
-    [InlineData("BetterImplementation")]
-    [InlineData("CoolImplementation")]
-    [InlineData("EdgyImplementation")]
-    [InlineData("RobustImplementation")]
-    public void HandlesGuess_WithSingleWeakGuessElement(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithSingleWeakGuessElement()
     {
-        Assert.Empty("TODO: Implement");
+        var guess = new List<int>() { 5, 22, 7, 2, 1 };
+        var secret = _defaultSecret;
+        var expected = "0 strong, 1 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
     }
 
-    [Theory]
-    [InlineData("NiaveImplementation")]
-    [InlineData("BetterImplementation")]
-    [InlineData("CoolImplementation")]
-    [InlineData("EdgyImplementation")]
-    [InlineData("RobustImplementation")]
-    public void HandlesGuess_WithWeakGuessElement_SupercededByLaterStrongGuessElement(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithWeakGuessElement_SupercededByLaterStrongGuessElement()
     {
-        Assert.Empty("TODO: Implement");
+        var guess = new List<int>() { 8, 0, 8, 2, 1 };
+        var secret = _defaultSecret;
+        var expected = "1 strong, 0 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
     }
 
-    [Theory]
-    [InlineData("NiaveImplementation")]
-    [InlineData("BetterImplementation")]
-    [InlineData("CoolImplementation")]
-    [InlineData("EdgyImplementation")]
-    [InlineData("RobustImplementation")]
-    public void HandlesGuess_WithStrongGuessElement_OverridingLaterWeakGuessElement(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithStrongGuessElement_OverridingLaterWeakGuessElement()
     {
-        Assert.Empty("TODO: Implement");
+        var guess = new List<int>() { 22, 22, 7, 2, 1 };
+        var secret = _defaultSecret;
+        var expected = "1 strong, 0 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
     }
 
-    [Theory]
-    [InlineData("NiaveImplementation")]
-    [InlineData("BetterImplementation")]
-    [InlineData("CoolImplementation")]
-    [InlineData("EdgyImplementation")]
-    [InlineData("RobustImplementation")]
-    public void HandlesGuess_WithSingleStrongGuessElement_OverridingManyWeakGuessElements(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithSingleStrongGuessElement_OverridingManyWeakGuessElements()
     {
-        Assert.Empty("TODO: Implement");
+        var guess = new List<int>() { 8, 8, 8, 8, 1 };
+        var secret = _defaultSecret;
+        var expected = "1 strong, 0 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
     }
 
-    [Theory]
-    [InlineData("NiaveImplementation")]
-    [InlineData("BetterImplementation")]
-    [InlineData("CoolImplementation")]
-    [InlineData("EdgyImplementation")]
-    [InlineData("RobustImplementation")]
-    public void HandlesGuess_WithMoreDuplicateWeakGuessElements_ThanDuplicateMatchingSecretElements(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithMoreDuplicateWeakGuessElements_ThanDuplicateMatchingSecretElements()
     {
-        Assert.Empty("TODO: Implement");
+        var guess = new List<int>() { 3, 3, 3, 7, 1 };
+        var secret = _defaultSecret;
+        var expected = "0 strong, 2 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
     }
 
-    [Theory]
-    [InlineData("NiaveImplementation")]
-    [InlineData("BetterImplementation")]
-    [InlineData("CoolImplementation")]
-    [InlineData("EdgyImplementation")]
-    [InlineData("RobustImplementation")]
-    public void HandlesGuess_WithFewerDuplicateWeakGuessElements_ThanDuplicateMatchingSecretElements(string implementationMethodName)
+    [Fact]
+    public void HandlesGuess_WithFewerDuplicateWeakGuessElements_ThanDuplicateMatchingSecretElements()
     {
-        Assert.Empty("TODO: Implement");
+        var guess = new List<int>() { 3, 3, 7, 7, 1 };
+        var secret = new List<int>() { 6, 6, 3, 3, 3 };
+        var expected = "0 strong, 2 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
     }
 }
