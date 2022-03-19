@@ -13,7 +13,7 @@ public class EvaluatorUnitTests
 
     // TODO: Fill out the tests
     [Theory]
-    [InlineData("NiaveImplementation")]
+    [InlineData("NaiveImplementation")]
     //[InlineData("BetterImplementation")]
     //[InlineData("CoolImplementation")]
     //[InlineData("EdgyImplementation")]
