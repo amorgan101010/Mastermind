@@ -32,7 +32,7 @@ The solution ended up being adding `<ProduceReferenceAssembly>false</ProduceRefe
 
 - [Stack Overflow Post that gave me that line](https://stackoverflow.com/a/67940310)
 
-#### Playing the Game
+### Playing the Game
 
 I am looking at [an online version of the game](https://webgamesonline.com/mastermind/index.php) to refresh my memory of how it plays. It only gives me a "strong" and "weak" count in the same way my evaluator currently does, so my plans to show which guesses are strong and weak seems misguided. I can also view the code of the online version right in my browser because it is plain PHP :D. Interestingly, they use "bulls" and "cows" rather than "strong" and "weak"...Wikipedia has the explanation for that variable name choice:
 
