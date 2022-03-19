@@ -1,6 +1,6 @@
 # Mastermind
 
-Currently, this contains an `Evaluator` class with a variety of implementations of a "guess evaluator" for the game Mastermind (with numbers representing the colored pegs of a physical version). Given a **secret** sequence of integers, a **guess** sequence of the same length is evaluated for correctness compared to the secret. The method returns a string containing two values: the number of _strong_ and _weak_ guess elements. A **strong guess** is the correct number at the correct position in the sequence; a **weak guess** is a number present in the secret, but in a different position in the secret than in the guess.
+Currently, this contains an `Evaluator` class with a variety of implementations of a "guess evaluator" for the game Mastermind (with numbers representing the colored pegs of a physical version). Given a **secret** sequence of integers, a **guess** sequence of the same length is evaluated for correctness compared to the secret. The method returns a string containing two values: the number of _bulls_ and _cows_ in the guess. A **bull** is the correct value at the correct position in the sequence; a **cow** is a value in the secret, but in a different position in the secret than in the guess.
 
 ## How to Run
 
