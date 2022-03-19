@@ -3,9 +3,6 @@ using Xunit;
 
 namespace Mastermind.Tests;
 
-// Any commented out InlineData indicates the method either doesn't exist
-// or the test scenario fails for that implementation.
-
 public class EvaluatorUnitTests
 {
     public List<int> _defaultSecret = new List<int>() { 22, 6, 8, 3, 3 };
@@ -15,7 +12,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 21, 5, 7, 2, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "0 strong, 0 weak";
+        var expected = new GuessEvaluation(0, 0);
 
         var sut = new Evaluator();
 
@@ -32,7 +29,7 @@ public class EvaluatorUnitTests
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
         var guess = secret;
 
-        var expected = "5 strong, 0 weak";
+        var expected = new GuessEvaluation(5, 0);
 
         var sut = new Evaluator();
 
@@ -48,7 +45,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 22, 5, 7, 2, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "1 strong, 0 weak";
+        var expected = new GuessEvaluation(1, 0);
 
         var sut = new Evaluator();
 
@@ -64,7 +61,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 5, 22, 7, 2, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "0 strong, 1 weak";
+        var expected = new GuessEvaluation(0, 1);
 
         var sut = new Evaluator();
 
@@ -80,7 +77,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 8, 0, 8, 2, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "1 strong, 0 weak";
+        var expected = new GuessEvaluation(1, 0);
 
         var sut = new Evaluator();
 
@@ -96,7 +93,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 22, 22, 7, 2, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "1 strong, 0 weak";
+        var expected = new GuessEvaluation(1, 0);
 
         var sut = new Evaluator();
 
@@ -112,7 +109,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 8, 8, 8, 8, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "1 strong, 0 weak";
+        var expected = new GuessEvaluation(1, 0);
 
         var sut = new Evaluator();
 
@@ -128,7 +125,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 3, 3, 3, 7, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "0 strong, 2 weak";
+        var expected = new GuessEvaluation(0, 2);
 
         var sut = new Evaluator();
 
@@ -144,7 +141,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 3, 3, 7, 7, 1 };
         var secret = new List<int>() { 6, 6, 3, 3, 3 };
-        var expected = "0 strong, 2 weak";
+        var expected = new GuessEvaluation(0, 2);
 
         var sut = new Evaluator();
 
@@ -162,7 +159,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 1, 3, 3, 3, 1 };
         var secret = new List<int>() { 22, 6, 8, 3, 3 };
-        var expected = "1 strong, 1 weak";
+        var expected = new GuessEvaluation(1, 1);
 
         var sut = new Evaluator();
 
@@ -178,7 +175,7 @@ public class EvaluatorUnitTests
     {
         var guess = new List<int>() { 1, 3, 3, 7, 1 };
         var secret = new List<int>() { 6, 6, 3, 3, 3 };
-        var expected = "1 strong, 1 weak";
+        var expected = new GuessEvaluation(1, 1);
 
         var sut = new Evaluator();
 
