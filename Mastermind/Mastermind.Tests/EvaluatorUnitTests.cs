@@ -27,6 +27,23 @@ public class EvaluatorUnitTests
     }
 
     [Fact]
+    public void HandlesCorrectGuess()
+    {
+        var secret = new List<int>() { 22, 6, 8, 3, 3 };
+        var guess = secret;
+
+        var expected = "5 strong, 0 weak";
+
+        var sut = new Evaluator();
+
+        var actual =
+            sut.Evaluate(
+                new GuessAndSecret(guess, secret));
+
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
     public void HandlesGuess_WithSingleStrongGuessElement()
     {
         var guess = new List<int>() { 22, 5, 7, 2, 1 };
