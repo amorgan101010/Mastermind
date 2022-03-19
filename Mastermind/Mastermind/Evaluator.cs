@@ -8,7 +8,11 @@ public class Evaluator
 {
     public string Evaluate(GuessAndSecret guessAndSecret)
     {
-        var secretSansStrongElements =
+
+        var guessAndSecretSansStrongElements =
+            RemoveStrongElements(guessAndSecret);
+
+/*         var secretSansStrongElements =
             guessAndSecret
                 .Secret
                     .Where(
@@ -20,22 +24,38 @@ public class Evaluator
                 .Guess
                     .Where(
                         (g, i) => g != guessAndSecret.Secret[i])
-                    .ToList();
+                    .ToList(); */
 
         var strongCount =
-            guessAndSecret.Guess.Count - guessSansStrongElements.Count;
+            guessAndSecret.Guess.Count - guessAndSecretSansStrongElements.Guess.Count;
 
         var distinctWeakElements =
-            guessSansStrongElements
-                .Where(g => secretSansStrongElements.Contains(g))
-                .Distinct()
+            guessAndSecretSansStrongElements.Guess
+                .Intersect(
+                    guessAndSecretSansStrongElements.Secret)
                 .ToList();
 
         var weakCount = distinctWeakElements
-            .Select(e => GetMinimumWeakCountForElement(e, guessAndSecret))
+            .Select(e => GetMinimumWeakCountForElement(e, guessAndSecretSansStrongElements))
             .Sum();
 
         return $"{strongCount} strong, {weakCount} weak";
+    }
+
+    private GuessAndSecret RemoveStrongElements(GuessAndSecret guessAndSecret)
+    {
+        return new GuessAndSecret(
+            guessAndSecret
+                .Guess
+                    .Where(
+                        (g, i) => g != guessAndSecret.Secret[i])
+                    .ToList(),
+            guessAndSecret
+                .Secret
+                    .Where(
+                        (s, i) => s != guessAndSecret.Guess[i])
+                    .ToList()
+        );
     }
 
     private int GetMinimumWeakCountForElement(

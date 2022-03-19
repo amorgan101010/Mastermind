@@ -137,4 +137,7 @@ public class EvaluatorUnitTests
 
         Assert.Equal(expected, actual);
     }
+
+    // TODO: versions of the two tests above
+    // but with a strong guess thrown in
 }
