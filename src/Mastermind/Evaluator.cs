@@ -49,10 +49,10 @@ public class Evaluator
         int distinctCow, GuessAndSecret guessAndSecretSansBulls)
     {
         return Math.Min(
-            ElementFrequency(
+            CowFrequency(
                 distinctCow,
                 guessAndSecretSansBulls.Guess),
-            ElementFrequency(
+            CowFrequency(
                 distinctCow,
                 guessAndSecretSansBulls.Secret));
     }
@@ -79,7 +79,7 @@ public class Evaluator
             .ToList();
     }
 
-    private int ElementFrequency(int element, List<int> sequence)
+    private int CowFrequency(int element, List<int> sequence)
     {
         return sequence
             .Where(s => s == element)
