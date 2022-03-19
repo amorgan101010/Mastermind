@@ -52,7 +52,6 @@ public class Evaluator
             ElementFrequency(
                 distinctWeakElement,
                 guessAndSecretSansStrongElements.Guess),
-                        
             ElementFrequency(
                 distinctWeakElement,
                 guessAndSecretSansStrongElements.Secret));
@@ -63,14 +62,21 @@ public class Evaluator
         var enrichedGuessAndSecret = Enrich(guessAndSecret);
 
         return new GuessAndSecret(
-                enrichedGuessAndSecret.Guess
-                    .Except(enrichedGuessAndSecret.Secret)
-                    .Select(x => x.Value)
-                    .ToList(),
-                enrichedGuessAndSecret.Secret
-                    .Except(enrichedGuessAndSecret.Guess)
-                    .Select(x => x.Value)
-                    .ToList());
+                RemoveStrongElements(
+                    enrichedGuessAndSecret.Guess,
+                    enrichedGuessAndSecret.Secret),
+                RemoveStrongElements(
+                    enrichedGuessAndSecret.Secret,
+                    enrichedGuessAndSecret.Guess));
+    }
+
+    private List<int> RemoveStrongElements(
+        Dictionary<int, int> left, Dictionary<int, int> right)
+    {
+        return left
+            .Except(right)
+            .Select(x => x.Value)
+            .ToList();
     }
 
     private int ElementFrequency(int element, List<int> sequence)
