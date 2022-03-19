@@ -1,4 +1,6 @@
-﻿namespace Mastermind;
+﻿using System.Collections.Generic;
+
+namespace Mastermind;
 
 public class Evaluator
 {

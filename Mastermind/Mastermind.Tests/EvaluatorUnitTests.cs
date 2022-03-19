@@ -3,6 +3,10 @@ using Xunit;
 
 namespace Mastermind.Tests;
 
+// For some reason, right now these tests don't work
+// when run with VS Code's "Run [All] Tests" buttons.
+// They work via `dotnet test` and Visual Studio's Test Explorer, though.
+
 public class EvaluatorUnitTests
 {
     public List<int> _defaultSecret = new List<int>() { 22, 6, 8, 3, 3 };
