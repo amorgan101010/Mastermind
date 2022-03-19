@@ -8,7 +8,14 @@ public class Evaluator
 {
     public GuessEvaluation Evaluate(GuessAndSecret guessAndSecret)
     {
+        return Evaluate(Disorder(guessAndSecret));
+    }
 
+    // I assume I can easily pass in an unordered guess and secret
+    // if/when I'm using this to evaluate a guess in a game...
+    // I was just given lists in the original problem.
+    public GuessEvaluation Evaluate(UnorderedGuessAndSecret guessAndSecret)
+    {
         var guessAndSecretSansBulls =
             RemoveBulls(
                 guessAndSecret);
@@ -26,7 +33,7 @@ public class Evaluator
     }
 
     private int GetBullCount(
-        List<int> guess, List<int> guessSansBulls)
+        Dictionary<int, int> guess, List<int> guessSansBulls)
     {
         return guess.Count - guessSansBulls.Count;
     }
@@ -57,17 +64,15 @@ public class Evaluator
                 guessAndSecretSansBulls.Secret));
     }
 
-    private GuessAndSecret RemoveBulls(GuessAndSecret guessAndSecret)
+    private GuessAndSecret RemoveBulls(UnorderedGuessAndSecret unorderedGuessAndSecret)
     {
-        var enrichedGuessAndSecret = Enrich(guessAndSecret);
-
         return new GuessAndSecret(
                 RemoveBulls(
-                    enrichedGuessAndSecret.Guess,
-                    enrichedGuessAndSecret.Secret),
+                    unorderedGuessAndSecret.Guess,
+                    unorderedGuessAndSecret.Secret),
                 RemoveBulls(
-                    enrichedGuessAndSecret.Secret,
-                    enrichedGuessAndSecret.Guess));
+                    unorderedGuessAndSecret.Secret,
+                    unorderedGuessAndSecret.Guess));
     }
 
     private List<int> RemoveBulls(
@@ -87,7 +92,7 @@ public class Evaluator
             .Count;
     }
 
-    private EnrichedGuessAndSecret Enrich(
+    private UnorderedGuessAndSecret Disorder(
         GuessAndSecret guessAndSecret)
     {
         return new(
@@ -105,7 +110,7 @@ public class Evaluator
 
 public record GuessAndSecret(List<int> Guess, List<int> Secret);
 
-public record EnrichedGuessAndSecret(Dictionary<int, int> Guess, Dictionary<int, int> Secret);
+public record UnorderedGuessAndSecret(Dictionary<int, int> Guess, Dictionary<int, int> Secret);
 
 public record WeakElementFrequencies(int GuessFrequency, int SecretFrequency);
 
